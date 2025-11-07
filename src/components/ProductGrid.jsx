@@ -91,7 +91,7 @@ function FeaturedBanner() {
           <h3 className="text-2xl font-bold">Weekend Mega Sale — up to 15% off</h3>
           <p className="text-white/70 mt-1 max-w-xl">Grab limited-time discounts on popular top-ups. Instant codes, global regions, safe checkout.</p>
         </div>
-        <a href="#" className="inline-flex whitespace-nowrap items-center justify-center rounded-xl bg-gradient-to-r from-purple-500 to-blue-500 px-5 py-3 text-sm font-semibold text-white shadow-lg shadow-purple-500/20 hover:from-purple-600 hover:to-blue-600 transition">
+        <a href="#catalog" className="inline-flex whitespace-nowrap items-center justify-center rounded-xl bg-gradient-to-r from-purple-500 to-blue-500 px-5 py-3 text-sm font-semibold text-white shadow-lg shadow-purple-500/20 hover:from-purple-600 hover:to-blue-600 transition">
           Shop Deals
         </a>
       </div>
@@ -99,10 +99,10 @@ function FeaturedBanner() {
   );
 }
 
-function ProductCard({ item }) {
+function ProductCard({ item, onSelect }) {
   const { Icon } = item;
   return (
-    <div className="group rounded-2xl border border-white/10 bg-white/[0.03] hover:bg-white/[0.06] transition shadow-lg shadow-purple-500/5 overflow-hidden">
+    <button onClick={() => onSelect?.(item.id)} className="text-left group rounded-2xl border border-white/10 bg-white/[0.03] hover:bg-white/[0.06] transition shadow-lg shadow-purple-500/5 overflow-hidden focus:outline-none focus:ring-2 focus:ring-purple-500">
       <div className="p-5">
         <div className="flex items-start justify-between">
           <div className={`h-12 w-12 rounded-xl bg-gradient-to-br ${item.gradient} flex items-center justify-center text-white`}> 
@@ -122,15 +122,13 @@ function ProductCard({ item }) {
       </div>
       <div className="px-5 py-4 border-t border-white/10 flex items-center justify-between bg-black/20">
         <span className="text-white font-medium">{item.price}</span>
-        <button className="rounded-lg px-3 py-1.5 text-sm font-medium text-white bg-gradient-to-r from-purple-500 to-blue-500 hover:from-purple-600 hover:to-blue-600">
-          Top Up
-        </button>
+        <span className="rounded-lg px-3 py-1.5 text-sm font-medium text-white bg-gradient-to-r from-purple-500 to-blue-500 group-hover:from-purple-600 group-hover:to-blue-600">View</span>
       </div>
-    </div>
+    </button>
   );
 }
 
-export default function ProductGrid() {
+export default function ProductGrid({ onSelect }) {
   const [active, setActive] = useState('all');
   const data = items.filter((i) => (active === 'all' ? true : i.cat === active) || (active === 'new' ? i.badge === 'New' : false));
 
@@ -142,7 +140,7 @@ export default function ProductGrid() {
             <h2 className="text-2xl md:text-3xl font-bold">Popular Top-ups</h2>
             <p className="text-white/70 mt-1">Handpicked best-sellers with instant delivery</p>
           </div>
-          <a href="#" className="text-sm text-white/70 hover:text-white">View all</a>
+          <a href="#catalog" className="text-sm text-white/70 hover:text-white">View all</a>
         </div>
 
         {/* category tabs */}
@@ -166,7 +164,7 @@ export default function ProductGrid() {
 
         <div className="mt-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
           {data.map((it) => (
-            <ProductCard key={it.id} item={it} />
+            <ProductCard key={it.id} item={it} onSelect={onSelect} />
           ))}
         </div>
       </div>
