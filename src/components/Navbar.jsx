@@ -1,40 +1,46 @@
-import { ShoppingCart, User, Search } from 'lucide-react';
-import { useState } from 'react';
+import React from 'react';
+import { Search, User } from 'lucide-react';
 
-export default function Navbar() {
-  const [query, setQuery] = useState('');
-
+const Navbar = ({ onLogoClick }) => {
   return (
-    <header className="w-full sticky top-0 z-50 bg-black/70 backdrop-blur supports-[backdrop-filter]:bg-black/50 border-b border-white/10">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex items-center gap-4">
-        <a href="#" className="flex items-center gap-2">
-          <div className="w-9 h-9 rounded-lg bg-gradient-to-br from-purple-500 to-blue-500" />
-          <span className="font-semibold text-white text-lg tracking-wide">NeoTopUp</span>
-        </a>
+    <header className="sticky top-0 z-40 backdrop-blur supports-[backdrop-filter]:bg-white/60 bg-white/90 border-b border-gray-200">
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div className="flex h-16 items-center justify-between">
+          {/* Left: Logo */}
+          <button
+            onClick={onLogoClick}
+            className="flex items-center gap-2 group"
+            aria-label="Back to catalog"
+          >
+            <div className="h-9 w-9 rounded-md bg-gradient-to-br from-indigo-500 via-violet-500 to-fuchsia-500 shadow-sm" />
+            <span className="text-lg font-semibold tracking-tight text-gray-900 group-hover:text-indigo-600 transition-colors">
+              NovaVouchers
+            </span>
+          </button>
 
-        <div className="hidden md:flex items-center flex-1 max-w-xl ml-6">
-          <div className="relative w-full">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-white/60" />
-            <input
-              value={query}
-              onChange={(e) => setQuery(e.target.value)}
-              placeholder="Search games or vouchers..."
-              className="w-full rounded-xl bg-white/5 border border-white/10 px-10 py-2.5 text-white placeholder-white/50 focus:outline-none focus:ring-2 focus:ring-purple-500"
-            />
+          {/* Middle: Search */}
+          <div className="hidden md:flex items-center w-full max-w-lg mx-6">
+            <div className="relative w-full">
+              <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-400" />
+              <input
+                type="text"
+                placeholder="Search games, vouchers, regions..."
+                className="w-full pl-10 pr-4 py-2.5 rounded-lg border border-gray-200 bg-gray-50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 text-sm"
+              />
+            </div>
           </div>
-        </div>
 
-        <div className="ml-auto flex items-center gap-3">
-          <button className="inline-flex items-center gap-2 rounded-xl px-3 py-2 text-sm font-medium text-white bg-white/5 border border-white/10 hover:bg-white/10 transition">
-            <ShoppingCart className="h-5 w-5" />
-            <span className="hidden sm:inline">Cart</span>
-          </button>
-          <button className="inline-flex items-center gap-2 rounded-xl px-3 py-2 text-sm font-medium text-white bg-gradient-to-r from-purple-500 to-blue-500 hover:from-purple-600 hover:to-blue-600 transition">
-            <User className="h-5 w-5" />
-            <span className="hidden sm:inline">Sign in</span>
-          </button>
+          {/* Right: Auth */}
+          <div className="flex items-center gap-2">
+            <button className="inline-flex items-center gap-2 rounded-lg border border-gray-200 px-3.5 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 active:bg-gray-100">
+              <User className="h-4 w-4" />
+              Sign in
+            </button>
+          </div>
         </div>
       </div>
     </header>
   );
-}
+};
+
+export default Navbar;
